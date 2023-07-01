@@ -1,9 +1,17 @@
 // import MicRecorder from "mic-recorder-to-mp3"
-// import axios from "axios"
 import { useEffect, useState, useRef } from "react";
 import { Box, ChakraProvider, Grid, theme, VStack } from "@chakra-ui/react";
 import { Recorder } from "react-voice-recorder";
 import "react-voice-recorder/dist/index.css";
+import axios from "axios"
+
+const assemblyApi = axios.create({
+  baseURL: 'https://api.assemblyai.com/v2',
+  headers: {
+    authorization: process.evn.REACT_APP_ASSEMBLY_API_KEY,
+    "content-type": 'application/json',
+  },
+})
 
 const initialState = {
   url: null,
@@ -31,9 +39,14 @@ const Home = () => {
     setTranscript({id: ''})
   };
 
-  const handleAudioUpload = () => {
+  const handleAudioUpload = async (audioFile) => {
+    setIsLoading(true)
+
+    const { data: uploadResponse } = await assemblyApi.post('/upload', audioFile);
 
   }
+
+  
 
   return (
     <ChakraProvider theme={theme}>
