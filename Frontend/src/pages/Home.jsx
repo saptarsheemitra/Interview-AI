@@ -1,58 +1,58 @@
-import MicRecorder from "mic-recorder-to-mp3"
-import { useEffect, useState, useRef } from "react"
-import axios from "axios"
+// import MicRecorder from "mic-recorder-to-mp3"
+// import axios from "axios"
+import { useEffect, useState, useRef } from "react";
+import { Box, ChakraProvider, Grid, theme, VStack } from "@chakra-ui/react";
+import { Recorder } from "react-voice-recorder";
+import "react-voice-recorder/dist/index.css";
+
+const initialState = {
+  url: null,
+  blob: null,
+  chuncks: null,
+  duration: {
+    h: 0,
+    m: 0,
+    s: 0,
+  },
+}
 
 const Home = () => {
-    const recorder = useRef(null) //Recorder
-    const audioPlayer = useRef(null) //Ref for the HTML Audio Tag
-    const [blobURL, setBlobUrl] = useState(null)
-    const [audioFile, setAudioFile] = useState(null)
-    const [isRecording, setIsRecording] = useState(null)
-  
-    useEffect(() => {
-      //Declares the recorder object and stores it inside of ref
-      recorder.current = new MicRecorder({ bitRate: 128 })
-    }, [])
-  
-    const startRecording = () => {
-      // Check if recording isn't blocked by browser
-      recorder.current.start().then(() => {
-        setIsRecording(true)
-      })
-    }
-  
-    const stopRecording = () => {
-      recorder.current
-        .stop()
-        .getMp3()
-        .then(([buffer, blob]) => {
-          const file = new File(buffer, "audio.mp3", {
-            type: blob.type,
-            lastModified: Date.now(),
-          })
-          const newBlobUrl = URL.createObjectURL(blob)
-          setBlobUrl(newBlobUrl)
-          setIsRecording(false)
-          setAudioFile(file)
-        })
-        .catch((e) => console.log(e))
-    }
-    console.log(audioFile)
-  
-    return (
-      <div>
-        <h1>React Speech Recognition App</h1>
-        <audio ref={audioPlayer} src={blobURL} controls='controls' />
-        <div>
-          <button disabled={isRecording} onClick={startRecording}>
-            START
-          </button>
-          <button disabled={!isRecording} onClick={stopRecording}>
-            STOP
-          </button>
-          <button>SUBMIT</button>
-        </div>
-      </div>
+  const [audioDetails, setAudioDetails] = useState(initialState);
+
+  const [transcript, setTranscript] = useState({ id: "" });
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleAudioStop = (data) => {
+    setAudioDetails(data);
+  }
+
+  const handleReset = () => {
+    setAudioDetails({...initialState})
+    setTranscript({id: ''})
+  };
+
+  const handleAudioUpload = () => {
+
+  }
+
+  return (
+    <ChakraProvider theme={theme}>
+      <Box textAlign="center" fontSize="xl">
+        <Grid minH="100vh" p={3}>
+          <VStack spacing={8}>
+            <Box width={1000}>
+            <Recorder
+              record={true}
+              audioURL={audioDetails.url}
+              handleAudioStop={handleAudioStop}
+              handAudioUpload={handleAudioUpload}
+              handleReset={handleReset}
+            />
+            </Box>
+            </VStack>
+        </Grid>
+      </Box>
+    </ChakraProvider>
   );
 };
 
