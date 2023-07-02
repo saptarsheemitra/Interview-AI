@@ -1,6 +1,6 @@
 console.log("Less goo");
 
-const KEY="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";
+
 //OPEN AI API KEY.
 
 import { Configuration,OpenAIApi } from "openai";
@@ -9,9 +9,20 @@ import { Configuration,OpenAIApi } from "openai";
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
+import cors from 'cors'
+
+
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const KEY=process.env.API_KEY;
+
+// const cors = require('cors');
 
 // Initialize Express
 const app = express();
+app.use(cors());
 
 // Connect to MongoDB using Mongoose
 // mongoose.connect('mongodb://localhost/mydatabase', {
@@ -33,23 +44,40 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // ...
 
 // Start the server
-const port = 3000;
+const port = 4000;
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
 
 
+
+
 app.get("/", async (req, res) => {
     console.log("Calling OpenAI API to get the Evaluation");
     // var ans=req.body.text;
-    const interviewAnswers = 'My strengths include good communication skills and attention to detail but i am lazy sad.|I handle stress by practicing deep breathing and time management.|In a previous role, I had to meet a tight deadline, so I organized a team meeting to delegate tasks and created a timeline to ensure timely completion.';
+   
     
-    var temp1=await API_CALL();
+    var temp1=await API_CALL(answers);
     res.send(temp1); //sending evaluation string back to the front-END
 
 
 
 });
+
+app.post("/upload", async (req, res) => {
+    const textData = req.body.textData;
+    console.log('Received text data:', textData);
+  
+    // Process the textData as needed
+     
+    var temp1=await API_CALL(textData);
+    console.log(temp1)
+    res.send(temp1); //sending evaluation string back to the front-END
+  
+    
+});
+
+
 
 
 app.get("/record",(req,res)=>{
@@ -67,9 +95,9 @@ app.get("/record",(req,res)=>{
 
 //API FUNCTION SIU
 
-async function API_CALL(){
+async function API_CALL(interviewAnswers){
     const interviewQuestions = 'What are your strengths?|How do you handle stress?|Tell me about a challenging situation you faced and how you resolved it.';
-    const interviewAnswers = 'My strengths include good communication skills and attention to detail but i am lazy sad.|I handle stress by practicing deep breathing and time management.|In a previous role, I had to meet a tight deadline, so I organized a team meeting to delegate tasks and created a timeline to ensure timely completion.';
+    // const interviewAnswers = 'My strengths include good communication skills and attention to detail but i am lazy sad.|I handle stress by practicing deep breathing and time management.|In a previous role, I had to meet a tight deadline, so I organized a team meeting to delegate tasks and created a timeline to ensure timely completion.';
 
 //Configuration to set up the API KEY
 
@@ -93,4 +121,3 @@ const res=await openai.createChatCompletion({
 return res.data.choices[0].message.content;
 
 }
-

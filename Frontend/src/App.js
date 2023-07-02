@@ -108,7 +108,7 @@ function App() {
   
     // Send textData to the backend
     try {
-      const response = await axios.post('http://localhost:4000/upload', { textData });
+      const response = await axios.post('https://splendid-naiad-41c7ce.netlify.app/.netlify/functions/api/upload', { textData });
       // console.log({textData});
       // console.log('Response from backend:', response.data);
       setResponse(response)
