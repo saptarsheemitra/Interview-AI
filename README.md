@@ -25,12 +25,13 @@ purposes by various companies accordingly.
   - React
   - Chakra UI
   - CSS
-  - AssemblyAPI
+  - Assembly API
   
  - Backend 
     - Node JS
     - Express
-    - OpenAPI
+    - OpenAI API
+    - Router
 ## Features of the application
 - A platform for companies to conduct AI based interviews and access the candidate response.
 - Text to speech features using AssemblyAPI so that it can be done dynamically.
