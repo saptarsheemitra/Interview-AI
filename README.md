@@ -35,6 +35,10 @@ purposes by various companies accordingly.
 - A platform for companies to conduct AI based interviews and access the candidate response.
 - Text to speech features using AssemblyAPI so that it can be done dynamically.
 - Behavioural Response from the OpenAPI model which will be rendered on the screen dynamically.
+## Future Scope
+- Using AssembleAPI features such as sentiment analysis, entity detection and many more can be also added.
+- Questions just like responses can also be dynamically recorded.
+- Responses can be stored in a database to analyze it further.
 ## Installation
 - Setup .env variables  ;
 
