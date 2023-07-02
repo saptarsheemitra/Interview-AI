@@ -1,4 +1,6 @@
 # Mercor-hackathon
+
+![Site Demo](https://github.com/Padm0069/Kuebiko/blob/main/src/components/Landing/Kuebiko-preview.gif)
 # Description :point_left:
 A React and Chakra UI Based Website with API endpoints.
 This website will act as a platform for AI based interviews where certain question
