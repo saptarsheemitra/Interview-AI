@@ -9,6 +9,7 @@ is passed onto backend API and the behavioural response is rendered on UI accord
 The TTS (Text to Speech) feature can also be used by the readers who have visual
 imparity. This also helps in providing the users with the hands-free feature so they
 can give the interview with ease.
+![Data Flow](https://github.com/saptarsheemitra/Mercor-hackathon/blob/main/Mercor-Data.jpg)
 # Aim :point_left:
 The aim of our project is to create an model for AI interview where companies can access 
 candidiate response based on factors provided in the OpenAI model and as wel as using AssemblyAI 
